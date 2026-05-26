@@ -1,6 +1,10 @@
 const rainApiUrl = 'https://wic.gov.taipei/OpenData/API/Rain/Get?stationNo=&loginId=open_rain&dataKey=85452C1D';
 const coordApiUrl = 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/O-A0002-001?Authorization=rdec-key-123-45678-011121314';
-const proxyUrl = 'https://api.allorigins.win/raw?url=';
+const proxyUrls = [
+  'https://api.allorigins.win/raw?url=',
+  'https://thingproxy.freeboard.io/fetch/',
+  'https://api.codetabs.com/v1/proxy?quest='
+];
 const taipeiCounty = '臺北市';
 
 let map;
@@ -44,12 +48,7 @@ async function loadData() {
 }
 
 async function fetchRainData() {
-  const response = await fetch(proxyUrl + encodeURIComponent(rainApiUrl));
-  if (!response.ok) {
-    throw new Error(`雨量資料取得失敗（${response.status}）`);
-  }
-
-  const json = await response.json();
+  const json = await fetchWithProxies(rainApiUrl);
   return Array.isArray(json.data) ? json.data : [];
 }
 
@@ -63,13 +62,29 @@ async function fetchStationCoords() {
     return Array.isArray(json.records?.Station) ? json.records.Station : [];
   } catch (error) {
     console.warn('直接讀取座標資料失敗，改用代理：', error);
-    const response = await fetch(proxyUrl + encodeURIComponent(coordApiUrl));
-    if (!response.ok) {
-      throw new Error(`座標資料代理取得失敗（${response.status}）`);
-    }
-    const json = await response.json();
+    const json = await fetchWithProxies(coordApiUrl);
     return Array.isArray(json.records?.Station) ? json.records.Station : [];
   }
+}
+
+async function fetchWithProxies(url) {
+  let lastError = null;
+
+  for (const proxy of proxyUrls) {
+    try {
+      const response = await fetch(proxy + encodeURIComponent(url), { cache: 'no-store' });
+      if (!response.ok) {
+        lastError = new Error(`代理 ${proxy} 回傳 ${response.status}`);
+        continue;
+      }
+      return await response.json();
+    } catch (error) {
+      console.warn(`代理 ${proxy} 失敗：`, error);
+      lastError = error;
+    }
+  }
+
+  throw new Error(lastError ? lastError.message : '所有代理都失敗');
 }
 
 function renderMap(rainData, stationData) {
