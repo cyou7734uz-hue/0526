@@ -1,0 +1,112 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Segoe UI", "Microsoft JhengHei", sans-serif;
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+#panel {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: auto;
+  bottom: 10px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 380px;
+}
+
+#controls {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+}
+
+#controls h1 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+#status {
+  margin-top: 8px;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+#refreshBtn {
+  margin-top: 10px;
+  display: inline-block;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  background: #ff4d4d;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#refreshBtn:hover {
+  background: #e73c3c;
+}
+
+#list {
+  max-height: calc(100vh - 170px);
+  overflow-y: auto;
+  background: rgba(10, 20, 40, 0.84);
+  color: #fff;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+}
+
+#list .list-header {
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+#list table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#list th,
+#list td {
+  padding: 6px 6px;
+  text-align: left;
+  vertical-align: top;
+}
+
+#list th {
+  color: #9ddcff;
+  font-size: 0.88rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+#list td {
+  font-size: 0.9rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+#list tr:last-child td {
+  border-bottom: none;
+}
+
+#list tr.unmatched td {
+  opacity: 0.7;
+}
+
+.leaflet-container {
+  background: #ddd;
+}

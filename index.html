@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>台北市即時雨量地圖</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div id="panel">
+      <div id="controls">
+        <h1>台北市即時雨量站</h1>
+        <div id="status">資料載入中...</div>
+        <button id="refreshBtn">重新整理資料</button>
+      </div>
+      <div id="list"></div>
+    </div>
+    <script src="sketch.js"></script>
+  </body>
+</html>
